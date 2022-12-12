@@ -319,7 +319,7 @@ npctable = {
 	["Mother Bear"] = CFrame.new(-183.8, 4.6, 87.5),
 	["Sun Bear"] = CFrame.new(23.25, 14, 360.26),
 	["Spirit Bear"] = CFrame.new(-365, 99, 479),
-	--["Stick Bug"] = CFrame.new(-128, 51, 147),
+	["Stick Bug"] = CFrame.new(-128, 51, 147),
 	["Onett"] = CFrame.new(-8.4, 234, -517.9),
 	["Gummy Lair"] = CFrame.new(273, 25261, -745),
 	["Bubble Bee Man"] = CFrame.new(89, 312, -278),
@@ -328,6 +328,64 @@ npctable = {
 	["Diamond Mask"] = CFrame.new(-336, 132, -385)
 }
 
+--[[rares = {
+		[2314214749] = 3, -- stinger
+		[3967304192] = 3, -- spiritpetal
+		[2028603146] = 3, -- startreat
+		[4483267595] = 3, -- neon berry
+		[4483236276] = 3, -- bitter berry
+		[2306224708] = 2, -- mooncharm
+		[4520736128] = 3, -- atomic treat
+		[4528640710] = 3, -- box of frogs
+		[2319943273] = 3, -- starjelly
+		[1674686518] = 3, -- Ticket
+		[1674871631] = 3, -- Ticket
+		[1987257040] = 3, -- gifted diamond egg
+		[1987253833] = 3, -- gifted silver egg
+		[1987255318] = 3, -- gifted golden egg
+		[2007771339] = 3, -- star basic egg
+		[2529092020] = 3, -- Magic Bean (sprout)
+		[2584584968] = 3, -- Enzymes
+		[1471882621] = 2, -- RoyalJelly
+		[1471850677] = 3, -- Diamond egg
+		[1471848094] = 3, -- Silver egg
+		[1471849394] = 3, -- Gold egg
+		[1471846464] = 3, -- Basic egg
+		[3081760043] = 3, -- plastic egg
+		[2863122826] = 3, -- micro-converter
+		[2060626811] = 3, -- ant pass
+		[2659216738] = 2, -- present
+		[4520739302] = 3, -- Mythic Egg
+		[2495936060] = 3, -- blue extract
+		[2028574353] = 1, -- treat
+		[2545746569] = 3, -- oil
+		[3036899811] = 3, -- Robo Pass
+		[2676671613] = 3, -- night bell
+		[3835877932] = 3, -- tropical drink
+	    [2542899798] = 3, -- glitter
+		[2495935291] = 3, -- red extract
+		[1472135114] = 0, -- Honey
+		[3030569073] = 3, -- cloud vial
+		[3036899811] = 3, -- rpass
+		[2676715441] = 3, -- festive sprout
+		[3080740120] = 3, -- jelly beans
+		[2863468407] = 3, -- field dice
+		[2504978518] = 3, -- glue
+		[2594434716] = 3, -- translator
+		[3027672238] = 3, -- marshmallo bee
+		[3012679515] = 2, -- Coconut
+		[1629547638] = 2, -- Token link
+		[3582519526] = 2, -- Tornado (wind bee token, collects tokens)
+		[4889322534] = 2, -- Fuzzy bombs
+		[1671281844] = 2, -- photon bee
+		[2305425690] = 2, -- Puppy bond giver
+		[2000457501] = 2, -- Inspire (2x pollen)
+		[3582501342] = 2, -- Cloud
+	    [2319083910] = 2, -- Vicious spikes
+	    [1472256444] = 2, -- Baby bee loot bonus
+	    [177997841] = 2, -- bear bee morph
+	    [1442764904] = 2, -- Gummy storm+
+},]]
 
 local AccessoryTypes = require(game:GetService("ReplicatedStorage").Accessories).GetTypes()
 local MasksTable = {}
@@ -501,6 +559,7 @@ getgenv().bongkoc = {
         autoplanters = false,
         autokillmobs = false,
         autoant = false,
+        autousestinger = false,
         killwindy = false,
         godmode = false,
         disableconversion = false,
@@ -2507,6 +2566,7 @@ guiElements["toggles"]["autoquest"] = farmt:CreateToggle("Auto Accept/Confirm Qu
 guiElements["toggles"]["autodoquest"] = farmt:CreateToggle("Auto Do Quests [⚙]", nil, function(State) bongkoc.toggles.autodoquest = State end)
 guiElements["toggles"]["autospawnsprout"] = farmt:CreateToggle("Auto Special Sprout Summoner", nil, function(State) bongkoc.toggles.autospawnsprout = State end)
 guiElements["toggles"]["honeystorm"] = farmt:CreateToggle("Auto Honeystorm", nil, function(State) bongkoc.toggles.honeystorm = State end)
+guiElements["toggles"]["meteorshower"] = farmt:CreateToggle("Auto Meteor Shower", nil, function(State) bongkoc.toggles.meteorshower = State end):AddToolTip("It Only Activates Meteor Shower")
 farmt:CreateLabel(" ")
 guiElements["toggles"]["resetbeenergy"] = farmt:CreateToggle("Reset Bee Energy after X Conversions", nil, function(bool)
     bongkoc.toggles.resetbeenergy = bool
@@ -2716,11 +2776,16 @@ guiElements["toggles"]["avoidmobs"] = mobkill:CreateToggle("Avoid Mobs", nil, fu
 local autoanttoggle = mobkill:CreateToggle("Auto Ant", nil, function(State) bongkoc.toggles.autoant = State end)
 autoanttoggle:AddToolTip("You Need Spark Stuff ; Goes to Ant Challenge after pollen converting")
 guiElements["toggles"]["autoant"] = autoanttoggle
+mobkill:CreateLabel("")
+guiElements["toggles"]["autousestinger"] = mobkill:CreateToggle("Auto Use Stinger", nil, function(State) bongkoc.toggles.autousestinger = State end):AddToolTip("Uses 1 Stinger every 30 sec")
 
 local serverhopkill = combtab:CreateSection("Serverhopping Combat")
 serverhopkill:CreateButton("Vicious Bee Serverhopper ["..Danger.."]["..ExploitSpecific.."]", function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/BongoCaat/BSSBongo1/main/viciousbeeserverhop.lua"))()
 end):AddToolTip("Serverhops for rouge vicious bees")
+serverhopkill:CreateButton("Windy Bee Serverhopper ["..Danger.."]["..ExploitSpecific.."]", function() 
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/BongoCaat/BSSBongo1/main/windybeeserverhop.lua"))()
+end):AddToolTip("Serverhops for wild windy bees")
 serverhopkill:CreateLabel("")
 serverhopkill:CreateLabel("["..Danger.."] These functions will unload the UI")
 serverhopkill:CreateLabel("")
@@ -4231,6 +4296,16 @@ task.spawn(function()
 end)
 --stickbug
 ]]
+
+task.spawn(function()
+    while task.wait(1) do
+        if GetItemListWithValue()["Stinger"] > 0 and bongkoc.toggles.autousestinger then
+            game:GetService("ReplicatedStorage").Events.PlayerActivesCommand:FireServer({["Name"] = "Stinger"})
+            task.wait(30)
+        end
+    end
+end)
+
 task.spawn(function()
     while task.wait(1) do
         if bongkoc.toggles.killvicious and temptable.detected.vicious and not temptable.converting and not temptable.started.monsters and not game.Workspace.Toys["Ant Challenge"].Busy.Value then
@@ -4537,6 +4612,9 @@ task.spawn(function()
         temptable.honeycurrent = statsget().Totals.Honey
         if bongkoc.toggles.honeystorm then
             game.ReplicatedStorage.Events.ToyEvent:FireServer("Honeystorm")
+        end
+        if bongkoc.toggles.meteorshower then
+            game.ReplicatedStorage.Events.ToyEvent:FireServer("Mythic Meteor Shower")
         end
         if bongkoc.toggles.autospawnsprout then
             game.ReplicatedStorage.Events.ToyEvent:FireServer("Sprout Summoner")
