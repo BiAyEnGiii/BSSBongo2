@@ -561,6 +561,8 @@ getgenv().bongkoc = {
         clock = false,
         freeantpass = false,
         honeystorm = false,
+        meteorshower = false,
+        summonfreestickbug = false,
         autospawnsprout = false,
         autodoquest = false,
         --disableseperators = false,
@@ -2597,6 +2599,7 @@ guiElements["toggles"]["autoquest"] = farmt:CreateToggle("Auto Accept/Confirm Qu
 guiElements["toggles"]["autodoquest"] = farmt:CreateToggle("Auto Do Quests [⚙]", nil, function(State) bongkoc.toggles.autodoquest = State end)
 guiElements["toggles"]["autospawnsprout"] = farmt:CreateToggle("Auto Special Sprout Summoner", nil, function(State) bongkoc.toggles.autospawnsprout = State end)
 guiElements["toggles"]["honeystorm"] = farmt:CreateToggle("Auto Honeystorm", nil, function(State) bongkoc.toggles.honeystorm = State end)
+guiElements["toggles"]["summonfreestickbug"] = farmt:CreateToggle("Summon Free Stick Bug", nil, function(State) bongkoc.toggles.summonfreestickbug = State end)
 guiElements["toggles"]["meteorshower"] = farmt:CreateToggle("Auto Meteor Shower", nil, function(State) bongkoc.toggles.meteorshower = State end):AddToolTip("It Only Activates Meteor Shower")
 farmt:CreateLabel(" ")
 guiElements["toggles"]["resetbeenergy"] = farmt:CreateToggle("Reset Bee Energy after X Conversions", nil, function(bool)
@@ -4649,6 +4652,9 @@ task.spawn(function()
         temptable.honeycurrent = statsget().Totals.Honey
         if bongkoc.toggles.honeystorm then
             game.ReplicatedStorage.Events.ToyEvent:FireServer("Honeystorm")
+        end
+        if bongkoc.toggles.summonfreestickbug then
+            game:GetService("ReplicatedStorage").Events.SelectNPCOption:FireServer("StartFreeStickBugEvent")
         end
         if bongkoc.toggles.meteorshower then
             game.ReplicatedStorage.Events.ToyEvent:FireServer("Mythic Meteor Shower")
