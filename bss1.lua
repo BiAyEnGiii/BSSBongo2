@@ -2622,7 +2622,7 @@ guiElements["toggles"]["candyplanter"] = plantersection:CreateToggle("Blacklist 
 guiElements["toggles"]["redclayplanter"] = plantersection:CreateToggle("Blacklist Red Clay Planter", nil, function(State) bongkoc.toggles.redclayplanter = State end)
 guiElements["toggles"]["blueclayplanter"] = plantersection:CreateToggle("Blacklist Blue Clay Planter", nil, function(State) bongkoc.toggles.blueclayplanter = State end)
 guiElements["toggles"]["tackyplanter"] = plantersection:CreateToggle("Blacklist Tacky Planter", nil, function(State) bongkoc.toggles.tackyplanter = State end)
-guiElements["toggles"]["hydroponicplanter"] =plantersecion:CreateToggle("Blacklist Hydroponic Planter", nil, function(State) bongkoc.toggles.hydroponicplanter = State end)
+guiElements["toggles"]["hydroponicplanter"] = plantersection:CreateToggle("Blacklist Hydroponic Planter", nil, function(State) bongkoc.toggles.hydroponicplanter = State end)
 guiElements["toggles"]["heattreatedplanter"] = plantersection:CreateToggle("Blacklist Heat-Treated Planter", nil, function(State) bongkoc.toggles.heattreatedplanter = State end)
 guiElements["toggles"]["pesticideplanter"] = plantersection:CreateToggle("Blacklist Pesticide Planter", nil, function(State) bongkoc.toggles.pesticideplanter = State end)
 guiElements["toggles"]["petalplanter"] = plantersection:CreateToggle("Blacklist Petal Planter", nil, function(State) bongkoc.toggles.petalplanter = State end)
