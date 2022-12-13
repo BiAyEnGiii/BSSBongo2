@@ -4068,7 +4068,7 @@ task.spawn(function()
                         end
                     end
 
-                elseif tonumber(temptable.pollenpercentage) >= tonumber(bongkoc.vars.convertat) and not bongkoc.toggles.convertion and not bongkoc.toggles.disableconversion and not temptable.started.vicious and not temptable.planting then
+                elseif tonumber(temptable.pollenpercentage) >= tonumber(bongkoc.vars.convertat) and not bongkoc.toggles.convertion and not bongkoc.toggles.disableconversion and not temptable.started.vicious and not temptable.started.windy and not temptable.planting then
                     if not bongkoc.toggles.disableconversion then
                         temptable.tokensfarm = false
                         api.tween(2, player.SpawnPos.Value * CFrame.fromEulerAnglesXYZ(0, 110, 0) + Vector3.new(0, 0, 9))
@@ -4133,6 +4133,7 @@ task.spawn(function()
         end
     end
 end)
+
 --stickbug
 --[[function checksbcooldown()
 	local cooldown = time() - tonumber(stickbug_time)
@@ -4348,7 +4349,7 @@ end)
 
 task.spawn(function()
     while task.wait(1) do
-        if bongkoc.toggles.killvicious and temptable.detected.vicious and not temptable.converting and not temptable.started.monsters and not game.Workspace.Toys["Ant Challenge"].Busy.Value then
+        if bongkoc.toggles.killvicious and temptable.detected.vicious and not temptable.started.crab and not temptable.converting and not temptable.started.monsters and not game.Workspace.Toys["Ant Challenge"].Busy.Value then
             temptable.started.vicious = true
             disableall()
             local vichumanoid = api.humanoidrootpart()
@@ -4389,7 +4390,7 @@ end)
 
 task.spawn(function()
     while task.wait() do
-        if bongkoc.toggles.killwindy and temptable.detected.windy and not temptable.converting and not temptable.started.vicious and not temptable.started.mondo and not temptable.started.monsters and not game.Workspace.Toys["Ant Challenge"].Busy.Value then
+        if bongkoc.toggles.killwindy and temptable.detected.windy and not temptable.started.crab and not temptable.converting and not temptable.started.vicious and not temptable.started.mondo and not temptable.started.monsters and not game.Workspace.Toys["Ant Challenge"].Busy.Value then
             temptable.started.windy = true
             local windytokendb = false
             local windytokentp = false
