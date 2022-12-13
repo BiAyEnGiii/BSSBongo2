@@ -329,14 +329,43 @@ npctable = {
 }
 
 --[[rares = {
+        [8492845001] = 3 -- beequip sweatband
+        [8492844885] = 3 -- beequip smiley sticker
+        [8492844788] = 3 -- beequip pink shades 
+        [8492845001] = 3 -- beequip paperclip
+        [8492844487] = 3 -- beequip lei
+        [8492844280] = 3 -- beequip kazoo
+        [8492844176] = 3 -- beequip charm bracelet
+        [8492844048] = 3 -- beequip camo bandana
+        [8492843846] = 3 -- beequip bottlecap
+        [8492843696] = 3 -- beequip beret
+        [8492843567] = 3 -- beequip bead lizard
+        [8492843365] = 3 -- beequip bang snap
+        [8492843086] = 3 -- beequip bandage
+        [6084222899] = 3 -- beequip snow tiara
+        [8492870754] = 3 -- beequip pink shades(1)
+        [8492845400] = 3 -- beequip whistle
+        [8492845290] = 3 -- beequip thumbtack
+        [8492845132] = 3 -- beequip thimble
+        [11715988834] = 3 -- refreshing vial
+        [11715987790] = 3 -- motivating vial
+        [11715986662] = 3 -- satisfying vial
+        [11715985649] = 3 -- invigorating vial
+        [11715984625] = 3 -- comforting vial
+        [11804999979] = 3 -- cog2
+        [11804974025] = 3 -- cog
+        [11782097928] = 3 -- glitched drive
+        [11782096351] = 3 -- blue drive
+        [11782094519] = 3 -- red drive
+        [11782092243] = 3 -- white drive
 		[2314214749] = 3, -- stinger
 		[3967304192] = 3, -- spiritpetal
 		[2028603146] = 3, -- startreat
-		[4483267595] = 3, -- neon berry
-		[4483236276] = 3, -- bitter berry
+		[4483267595] = 3, -- neonberry
+		[4483236276] = 3, -- bitterberry
 		[2306224708] = 2, -- mooncharm
-		[4520736128] = 3, -- atomic treat
-		[4528640710] = 3, -- box of frogs
+		[4520736128] = 3, -- atomictreat
+		[4528640710] = 3, -- boxoffrogs
 		[2319943273] = 3, -- starjelly
 		[1674686518] = 3, -- Ticket
 		[1674871631] = 3, -- Ticket
@@ -359,7 +388,7 @@ npctable = {
 		[2495936060] = 3, -- blue extract
 		[2028574353] = 1, -- treat
 		[2545746569] = 3, -- oil
-		[3036899811] = 3, -- Robo Pass
+		[3036899811-3036899837] = 3, -- Robo Pass
 		[2676671613] = 3, -- night bell
 		[3835877932] = 3, -- tropical drink
 	    [2542899798] = 3, -- glitter
@@ -401,9 +430,9 @@ local DropdownPlanterTable = {
     "Red Clay Planter",
     "Blue Clay Planter",
     "Tacky Planter",
-    "Pesticide Planter",
     "Hydroponic Planter",
     "Heat-Treated Planter",
+    "Pesticide Planter",
     "Petal Planter",
     "The Planter Of Plenty",
     "None"
@@ -592,6 +621,8 @@ getgenv().bongkoc = {
         redclayplanter = false,
         blueclayplanter = false,
         tackyplanter = false,
+        hydroponicplanter = false,
+        heattreatedplanter = false,
         pesticideplanter = false,
         petalplanter = false,
         shutdownkick = false,
@@ -2591,6 +2622,8 @@ guiElements["toggles"]["candyplanter"] = plantersection:CreateToggle("Blacklist 
 guiElements["toggles"]["redclayplanter"] = plantersection:CreateToggle("Blacklist Red Clay Planter", nil, function(State) bongkoc.toggles.redclayplanter = State end)
 guiElements["toggles"]["blueclayplanter"] = plantersection:CreateToggle("Blacklist Blue Clay Planter", nil, function(State) bongkoc.toggles.blueclayplanter = State end)
 guiElements["toggles"]["tackyplanter"] = plantersection:CreateToggle("Blacklist Tacky Planter", nil, function(State) bongkoc.toggles.tackyplanter = State end)
+guiElements["toggles"]["hydroponicplanter"] =plantersecion:CreateToggle("Blacklist Hydroponic Planter", nil, function(State) bongkoc.toggles.hydroponicplanter = State end)
+guiElements["toggles"]["heattreatedplanter"] = plantersection:CreateToggle("Blacklist Heat-Treated Planter", nil, function(State) bongkoc.toggles.heattreatedplanter = State end)
 guiElements["toggles"]["pesticideplanter"] = plantersection:CreateToggle("Blacklist Pesticide Planter", nil, function(State) bongkoc.toggles.pesticideplanter = State end)
 guiElements["toggles"]["petalplanter"] = plantersection:CreateToggle("Blacklist Petal Planter", nil, function(State) bongkoc.toggles.petalplanter = State end)
 
@@ -3961,7 +3994,7 @@ task.spawn(function()
                                     mondopition = game.Workspace.Monsters["Mondo Chick (Lvl 8)"].Head.Position
                                     api.tween(.5, CFrame.new(
                                         mondopition.x,
-                                        mondopition.y - 59,
+                                        mondopition.y - 59.75,
                                         mondopition.z)
                                     )
                                     task.wait(.5)
@@ -4978,6 +5011,8 @@ task.spawn(function()
             planterData["Red Clay"] = not bongkoc.toggles.redclayplanter and fullPlanterData["Red Clay"] or nil
             planterData["Blue Clay"] = not bongkoc.toggles.blueclayplanter and fullPlanterData["Blue Clay"] or nil
             planterData["Tacky"] = not bongkoc.toggles.tackyplanter and fullPlanterData["Tacky"] or nil
+            planterData["Hydroponic"] = not bongkoc.toggles.hydroponicplanter and fullPlanterData["Hydroponic"] or nil
+            planterData["Heat-Treated"] = not bongkoc.toggles.heattreatedplanter and fullPlanterData["Heat-Treated"] or nil
             planterData["Pesticide"] = not bongkoc.toggles.pesticideplanter and fullPlanterData["Pesticide"] or nil
             planterData["Petal"] = not bongkoc.toggles.petalplanter and fullPlanterData["Petal"] or nil
 
